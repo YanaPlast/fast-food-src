@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+
+import React from 'react';
+import { NavBar } from './Components/NavBar';
+import {  Menu } from './Components/Menu';
+import { GlobalStyle } from './Components/GlobalStyle';
+import { ModalItem } from './Components/ModalItem';
+import { Order } from './Components/Order';
+import { useOpenItem } from './Components/UseOpenItem';
+
 
 function App() {
+
+  const openItem = useOpenItem();
+
+  // setOpenItem - хук, который обновляет стейт и дает команду перерндерить компонент
+  // setOpenItem необходимо запускать когда мы кликаем на каком-то товаре
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle/>
+      <NavBar/>
+      <Order/>
+      <Menu {...openItem} />
+      <ModalItem {...openItem} />
+    </>
   );
 }
 
