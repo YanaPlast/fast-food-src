@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ButtonCheckout } from './ButtonCheckout';
+import { ButtonCheckout } from '../Styled/ButtonCheckout';
 
 const Overlay = styled.div`
     position: fixed;
@@ -45,14 +45,23 @@ const HeaderContent = styled.div`
     font-falily: 'Pacifico', cursive;
 `;
 
-export const ModalItem = ({ openItem, setOpenItem }) => {
+export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
 
-    function closeModal(e) {
+    const closeModal = e => {
         if(e.target.id === "overlay") {
             setOpenItem(null);
         }
     }
-    if(!openItem) return null;
+
+    const order = {
+        //name: openItem.name
+        ...openItem
+    }
+
+    const addToOrder = () => {
+        setOrders([...orders, order]);
+        setOpenItem(null);
+    }
 
     return (
         <Overlay id="overlay" onClick={closeModal}>
@@ -63,7 +72,7 @@ export const ModalItem = ({ openItem, setOpenItem }) => {
                         <div> {openItem.name}</div>
                         <div> {openItem.price}</div>
                     </HeaderContent>
-                    <ButtonCheckout>Добавить</ButtonCheckout>
+                    <ButtonCheckout onClick={addToOrder}>Добавить</ButtonCheckout>
                 </Content>               
             </Modal>
         </Overlay>

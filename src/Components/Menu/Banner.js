@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import BannerImg from '../image/banner.png';
+import BannerImg from '../../image/banner.png';
 
 export const Banner = styled.div`
     margin-top: 80px;
