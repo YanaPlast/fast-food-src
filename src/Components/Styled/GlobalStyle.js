@@ -46,7 +46,6 @@ export const GlobalStyle = createGlobalStyle`
 
   button {
     padding: 0;
-    border: none;
     font: inherit;
     color: inherit;
     cursor: pointer;
@@ -57,5 +56,14 @@ export const GlobalStyle = createGlobalStyle`
   button:hover {
     opacity: 0.9;
     transition: all 0.3s ease-in-out;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button,  {
+    -webkit-appearance: none;
   }
 `;

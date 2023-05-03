@@ -12,10 +12,17 @@ export const ButtonCheckout = styled.button`
     border-color: transparent;
     transition-property: color, background-color, border-color;
     transition-duration: .3s;
+    color: #fff;
     
     &:hover {
         background-color: #fff;
         color: #299B01;
         border-color: #299B01;
+    }
+
+    &:disabled {
+        color: #bbb;
+        background-color: #ccc;
+        border: none;
     }
 `;
