@@ -45,15 +45,44 @@ const Login = styled.button`
     color: white;
 `;
 
-export const NavBar = () => (
+const User = styled.div`
+    display: flex;
+    align-items: center;
+    text-align: center;
+`;
+
+const LogOut = styled.span`
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 30px;
+`;
+
+const Figure = styled.figure`
+    margin: 0 30px;
+`;
+
+export const NavBar = ( { authentification, logIn, logOut }) => (
     <NavBarStyled>
         <Logo>
-            <ImgLogo src={logoImg} alt="logo"></ImgLogo>
+            <ImgLogo src={logoImg} alt="лого"></ImgLogo>
             <H1>FastFooder</H1>
         </Logo>
-        <Login href="">
-            <ImgLogin src={LoginImg} alt="Войти"></ImgLogin>
-            <p>Войти</p>
-        </Login>
+        {authentification ? 
+            <User>
+                <Figure>
+                    <img src={LoginImg} alt={authentification.displayName}/>
+                    <figcaption>{authentification.displayName}</figcaption>
+                </Figure>
+                <LogOut title="Выйти" onClick={logOut}>x</LogOut>
+            </User> :
+            <Login onClick={logIn}>
+                <Figure>
+                    <ImgLogin src={LoginImg} alt="Войти"></ImgLogin>
+                    <figcaption>Войти</figcaption>
+                </Figure>
+
+            </Login>   
+    }
     </NavBarStyled>
 )
