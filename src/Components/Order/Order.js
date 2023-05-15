@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { ButtonCheckout } from '../Styled/ButtonCheckout';
 import { OrderListItem } from './OrderListItem';
-import { totalPriceItems } from '../Fuctions/secondaryFunction';
-import { formatCurrency  } from '../Fuctions/secondaryFunction';
-import { projection  } from '../Fuctions/secondaryFunction';
+import { totalPriceItems, formatCurrency } from '../Fuctions/secondaryFunction';
+import { Context } from '../Fuctions/context';
 
 const OrderStyled = styled.section`
     position: fixed;
@@ -19,7 +18,7 @@ const OrderStyled = styled.section`
     padding: 20px;
 `;
 
-const OrderTitle = styled.h2`
+export const OrderTitle = styled.h2`
     text-align: center;
     margin-bottom: 30px;
 `;
@@ -32,7 +31,7 @@ const OrderList = styled.ul`
 
 `;
 
-const Total = styled.div`
+export const Total = styled.div`
     display: flex;
     margin-bottom: 30px;
 
@@ -41,7 +40,7 @@ const Total = styled.div`
     }
 `;
 
-const TotalPrice = styled.span`
+export const TotalPrice = styled.span`
     text-align: right;
     min-width: 65px;
     margin-left: 20px;
@@ -51,28 +50,15 @@ const EmptyList = styled.p`
     text-align: center;
 `;
 
-const rulesData = {
-    name: ['name'],
-    price: ['price'],
-    count: ['count'],
-    topping: ['topping', arr => arr.filter(obj => obj.checked).map(obj => obj.name),
-        arr => arr.length ? arr : 'no toppings'],
-    choice: ['choice', item => item ? item : 'no choices'],
-}
 
-export const Order = ({ orders, setOrders, setOpenItem, authentification, logIn, firebaseDatabase }) => {
 
-    const dataBase = firebaseDatabase();
+export const Order = () => {
 
-    const sendOrder = () => {
-        const newOrder = orders.map(projection(rulesData));
-        dataBase.ref('orders').push().set({
-            nameClient: authentification.displayName,
-            email: authentification.email,
-            order: newOrder
-        });
-        setOrders([]);
-    }
+    const {
+        auth: { authentification, logIn },
+        orders: { orders, setOrders },
+        orderConfirm: { setOpenOrderConfirm },
+    } = useContext(Context);
 
     const deleteItem = index => {   
 
@@ -96,23 +82,28 @@ export const Order = ({ orders, setOrders, setOpenItem, authentification, logIn,
                         order={order} 
                         deleteItem={deleteItem}
                         index={index}
-                        setOpenItem={setOpenItem}/>)}
+                        />)}
                 </OrderList> : 
                 <EmptyList>Список заказов пуст</EmptyList>
                 }
            </OrderContent>
-           <Total>
-                <span>Итого</span>
-                <span>{totalCounter}</span>
-                <TotalPrice>{formatCurrency(total)}</TotalPrice>
-           </Total>
-           <ButtonCheckout onClick={() => {
-                if(authentification) {
-                    sendOrder();
-                } else {
-                    logIn();
-                }
-           }}>Оформить</ButtonCheckout>
+           {orders.length ?
+            <>
+                <Total>
+                    <span>Итого</span>
+                    <span>{totalCounter}</span>
+                    <TotalPrice>{formatCurrency(total)}</TotalPrice>
+                </Total>
+                <ButtonCheckout onClick={() => {
+                        if(authentification) {
+                            setOpenOrderConfirm(true);
+                        } else {
+                            logIn();
+                        }
+                }}>Оформить</ButtonCheckout>            
+            </> :
+            null
+           }
         </OrderStyled>
     )
 }

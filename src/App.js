@@ -13,6 +13,11 @@ import { useOpenItem } from './Components/Hooks/useOpenItem';
 import { useOrders} from './Components/Hooks/useOrders';
 import { useAuth } from './Components/Hooks/useAuth';
 import { useTitle } from './Components/Hooks/useTitle';
+import { OrderConfirm } from './Components/Order/OrderConfirm';
+import { useOrderConfirm } from './Components/Hooks/useOrderConfirm';
+
+import { Context } from "./Components/Fuctions/context";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyA7KOyM9JdXvttZOFNzAtnPUpFdlgH0-W8",
@@ -36,24 +41,27 @@ function App() {
   const auth = useAuth(firebase.auth);
   const openItem = useOpenItem();
   const orders = useOrders();
+  const orderConfirm = useOrderConfirm();
   useTitle(openItem.openItem);
 
   // setOpenItem - хук, который обновляет стейт и дает команду перерндерить компонент
   // setOpenItem необходимо запускать когда мы кликаем на каком-то товаре
 
   return (
-    <>
+    <Context.Provider value={{
+      auth,
+      openItem,
+      orders,
+      orderConfirm
+    }}>
       <GlobalStyle/>
-      <NavBar {...auth}/>
-      <Order 
-        {...orders}
-        {...openItem}
-        {...auth}
-        firebaseDatabase={firebase.database}
-      /> 
-      <Menu {...openItem} />
+      <NavBar/>
+      <Order/> 
+      <Menu/>
       {openItem.openItem && <ModalItem {...openItem} {...orders}/>} 
-    </>
+      {orderConfirm.openOrderConfirm && 
+      <OrderConfirm {...orders} {...auth} {...orderConfirm} firebaseDatabase={firebase.database}/>}
+    </Context.Provider>
   );
 }
 
