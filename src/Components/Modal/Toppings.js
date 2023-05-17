@@ -19,6 +19,7 @@ const ToppingCheckbox= styled.input`
 
 
 export function Toppings({ toppings, checkToppings }) {
+
     return (
         <>
             <h3>Добавки</h3>

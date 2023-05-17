@@ -16,7 +16,7 @@ const ChoiceLabel = styled.label`
     cursor: pointer;
 `;
 
-export function Choices({ openItem, choice, changeChoices}) {
+export function Choices({ openItem, choice, changeChoices }) {
     return (
         <>
             <h3>Варианты</h3>

@@ -82,7 +82,7 @@ export const ModalItem = () => {
         ...openItem,
         count: counter.count,
         topping: toppings.toppings,
-        chioce: choices.choice,
+        choice: choices.choice,
     }
 
     const editOrder = () => {
@@ -115,7 +115,7 @@ export const ModalItem = () => {
                     </TotalPriceItem>
                     <ButtonCheckout 
                         onClick={isEdit ? editOrder : addToOrder}
-                        disabled={order.choices && !order.chioce}
+                        disabled={order.choices && !order.choice}
                         >{isEdit ? 'Редактировать' : 'Добавить'}</ButtonCheckout>
                 </Content>               
             </Modal>

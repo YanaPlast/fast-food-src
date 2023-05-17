@@ -15,7 +15,8 @@ const TrashButton = styled.button`
 `;
 
 const ItemName = styled.span`
-    flex-grow: 1;
+    flex: 1 1 auto;
+    max-height: 50%;
 `;
 
 const ItemPrice = styled.span`
@@ -23,12 +24,14 @@ const ItemPrice = styled.span`
     margin-right: 15px;
     min-width: 65px;
     text-align: right;
+    flex: 0 0 50px;
 `;
 
 const OrderItemStyled = styled.li`
     display: flex;
+    flex-wrap: no-wrap;
     margin: 10px 0;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     cursor: pointer;
 `;
 
